@@ -31,6 +31,7 @@ class CartItem extends StatelessWidget {
         ),
         alignment: Alignment.centerRight,
         padding: EdgeInsets.only(right: 20),
+        // match with EdgeInsets of card
         margin: EdgeInsets.symmetric(
           horizontal: 15,
           vertical: 4,

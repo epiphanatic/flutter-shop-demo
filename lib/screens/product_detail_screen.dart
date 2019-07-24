@@ -14,6 +14,10 @@ class ProductDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final productId =
         ModalRoute.of(context).settings.arguments as String; // is the id!
+    /// you don't want to rebuild this screen if anything changes to the
+    /// product since you can't change it here, and then you'd only see changes
+    /// if you were to go elsewhere and come back...you just want to tap into
+    /// the provider to get the info, so set listen: false
     final loadedProduct = Provider.of<Products>(
       context,
       listen: false,
@@ -28,9 +32,10 @@ class ProductDetailScreen extends StatelessWidget {
             Container(
               height: 300,
               width: double.infinity,
-              child: Image.network(
-                loadedProduct.imageUrl,
+              child: FadeInImage(
+                image: NetworkImage(loadedProduct.imageUrl),
                 fit: BoxFit.cover,
+                placeholder: AssetImage('assets/images/shop.png'),
               ),
             ),
             SizedBox(height: 10),

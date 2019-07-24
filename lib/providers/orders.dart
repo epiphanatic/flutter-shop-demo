@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:uuid/uuid.dart';
 
 import './cart.dart';
 
@@ -23,11 +24,15 @@ class Orders with ChangeNotifier {
     return [..._orders];
   }
 
+  final uuid = new Uuid();
+
   void addOrder(List<CartItem> cartProducts, double total) {
+    /// using insert 0 to add to beginning of list so that most recent
+    /// orders are at the beginnning
     _orders.insert(
       0,
       OrderItem(
-        id: DateTime.now().toString(),
+        id: uuid.v1(),
         amount: total,
         dateTime: DateTime.now(),
         products: cartProducts,

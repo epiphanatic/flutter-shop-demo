@@ -39,6 +39,9 @@ class Products with ChangeNotifier {
   ];
   // var _showFavoritesOnly = false;
 
+  /// The reason for using a getter here is that if you returned _items you
+  /// would have access to the list itself, can mutate it, etc.
+  /// returning a copy just get the information stored there.
   List<Product> get items {
     // if (_showFavoritesOnly) {
     //   return _items.where((prodItem) => prodItem.isFavorite).toList();
@@ -66,6 +69,8 @@ class Products with ChangeNotifier {
 
   void addProduct() {
     // _items.add(value);
+    /// all the parts of the app that are currently listening to this class,
+    /// ie listening to products, get rebuilt
     notifyListeners();
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:uuid/uuid.dart';
 
 class CartItem {
   final String id;
@@ -15,6 +16,8 @@ class CartItem {
 }
 
 class Cart with ChangeNotifier {
+  final uuid = new Uuid();
+
   Map<String, CartItem> _items = {};
 
   Map<String, CartItem> get items {
@@ -40,24 +43,28 @@ class Cart with ChangeNotifier {
   ) {
     if (_items.containsKey(productId)) {
       // change quantity...
+      /// since did containsKey, automatically gets existing item
       _items.update(
         productId,
         (existingCartItem) => CartItem(
-              id: existingCartItem.id,
-              title: existingCartItem.title,
-              price: existingCartItem.price,
-              quantity: existingCartItem.quantity + 1,
-            ),
+          id: existingCartItem.id,
+          title: existingCartItem.title,
+          price: existingCartItem.price,
+          quantity: existingCartItem.quantity + 1,
+        ),
       );
     } else {
+      /// putIfAbsent (and update above) take functions that create value
+      ///   not just the value itself
+      /// for both the first arg is the key
       _items.putIfAbsent(
         productId,
         () => CartItem(
-              id: DateTime.now().toString(),
-              title: title,
-              price: price,
-              quantity: 1,
-            ),
+          id: uuid.v1(),
+          title: title,
+          price: price,
+          quantity: 1,
+        ),
       );
     }
     notifyListeners();
