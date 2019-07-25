@@ -41,6 +41,10 @@ class CartItem extends StatelessWidget {
       onDismissed: (direction) {
         Provider.of<Cart>(context, listen: false).removeItem(productId);
       },
+      // you can do the following if you wanted to show an alert or whatever to confirm
+      // confirmDismiss: (direction) {
+      //   return future....
+      // },
       child: Card(
         margin: EdgeInsets.symmetric(
           horizontal: 15,
