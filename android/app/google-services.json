@@ -1,0 +1,115 @@
+{
+  "project_info": {
+    "project_number": "39994664427",
+    "firebase_url": "https://bounti-dev-34f18.firebaseio.com",
+    "project_id": "bounti-dev-34f18",
+    "storage_bucket": "bounti-dev-34f18.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:39994664427:android:4c72c5ae8a23622f",
+        "android_client_info": {
+          "package_name": "space.amnion.easylist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "39994664427-o2g1g5hvg42qtm1746qoj3q579o0n75n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "space.amnion.easylist",
+            "certificate_hash": "c32637665f8756f73891fcfa4e216ddd34ec1c61"
+          }
+        },
+        {
+          "client_id": "39994664427-p11778bous00p31k1prge2iockdpfsq7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "space.amnion.easylist",
+            "certificate_hash": "933c76aaaa2b04b91e0478dc460147dadc3a4ee6"
+          }
+        },
+        {
+          "client_id": "39994664427-930c1gion6l0tc0g8uhqnm1at7kedl6s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "space.amnion.easylist",
+            "certificate_hash": "09afae8551c11d50ac63bba6d4b7d2e14b717d45"
+          }
+        },
+        {
+          "client_id": "39994664427-ghdslgc0efmks4s289vtvi6fotdpl645.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDn1lAr7rbdvFNtUoh7bzu50PFRy7aG3Ek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "39994664427-ghdslgc0efmks4s289vtvi6fotdpl645.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "39994664427-e3a3lmjdqfbhfhunedl28mt2te8mt4id.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "space.amnion.easylist"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:39994664427:android:1edf8dfba20c6509",
+        "android_client_info": {
+          "package_name": "space.amnion.fluttershopdemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "39994664427-qmkjve1vbft9gt7bcrn06p6kem2u20it.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "space.amnion.fluttershopdemo",
+            "certificate_hash": "c32637665f8756f73891fcfa4e216ddd34ec1c61"
+          }
+        },
+        {
+          "client_id": "39994664427-ghdslgc0efmks4s289vtvi6fotdpl645.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDn1lAr7rbdvFNtUoh7bzu50PFRy7aG3Ek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "39994664427-ghdslgc0efmks4s289vtvi6fotdpl645.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "39994664427-e3a3lmjdqfbhfhunedl28mt2te8mt4id.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "space.amnion.easylist"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
