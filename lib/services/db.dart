@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import './globals.dart';
 import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 
@@ -44,7 +45,7 @@ class Document<T> {
 class Collection<T> {
   final Firestore _db = Firestore.instance;
   final String path;
-  final String query;
+  final String query; // this isn't implemented yet.
 
   CollectionReference ref;
 
@@ -53,10 +54,13 @@ class Collection<T> {
   }
 
   Future<List<T>> getData() async {
-    // var snapshots = await ref.getDocuments();
+    var snapshots = await ref.getDocuments();
+    return snapshots.documents
+        .map((doc) => Global.models[T](doc.data, doc.documentID) as T)
+        .toList();
     // return snapshots.documents
-    //     .map((doc) => Global.models[T](doc.data, doc.documentID) as T)
-    //     .toList();
+    // .map((doc) => Global.models[T](doc.data, doc.documentID) as T)
+    // .toList();
   }
 
   Stream<List<T>> streamData() {

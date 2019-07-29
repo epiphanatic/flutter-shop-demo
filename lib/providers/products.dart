@@ -68,30 +68,60 @@ class Products with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  void addProduct(Product product) async {
-    // add to DB
-    Collection<Product> _doc = Collection<Product>(path: 'products-shop-demo');
-    final res = await _doc.addDoc(
-      ({
-        'title': product.title,
-        'description': product.description,
-        'price': product.price,
-        'imageUrl': product.imageUrl,
-      }),
-    );
-    print(res.documentID);
+  Future<void> fetchAndSetProducts() async {
+    Collection<Product> _colRef =
+        Collection<Product>(path: 'products-shop-demo');
+    try {
+      final res = await _colRef.getData();
+      if (res.length != 0) {
+        for (Product product in res) {
+          print(product.id);
 
-    // add to local (although this should be removed and stream should be used instead)
-    final newProduct = Product(
-      title: product.title,
-      description: product.description,
-      price: product.price,
-      imageUrl: product.imageUrl,
-      id: res.documentID,
-    );
-    _items.add(newProduct);
-    // _items.insert(0, newProduct); // at the start of the list
-    notifyListeners();
+          /// **** PICKUP HERE by getting products into products overview screen
+          /// except use future builder like Jeff does not whatever Max is doing.
+        }
+      }
+    } catch (error) {
+      // here is where you would send errors to DB in future.
+      print('error: ' + error.toString());
+      // throwing the error will let calling function know there was one and passses it
+      throw error;
+    }
+  }
+
+  Future<void> addProduct(Product product) async {
+    // add to DB
+    Collection<Product> _colRef =
+        Collection<Product>(path: 'products-shop-demo');
+    try {
+      final res = await _colRef.addDoc(
+        ({
+          'title': product.title,
+          'description': product.description,
+          'price': product.price,
+          'imageUrl': product.imageUrl,
+          'isFavorite': product.isFavorite
+        }),
+      );
+      print(res.documentID);
+
+      // add to local (although this should be removed and stream should be used instead)
+      final newProduct = Product(
+        title: product.title,
+        description: product.description,
+        price: product.price,
+        imageUrl: product.imageUrl,
+        id: res.documentID,
+      );
+      _items.add(newProduct);
+      // _items.insert(0, newProduct); // at the start of the list
+      notifyListeners();
+    } catch (error) {
+      // here is where you would send errors to DB in future.
+      print('error: ' + error.toString());
+      // throwing the error will let calling function know there was one and passses it
+      throw error;
+    }
   }
 
   void updateProduct(String id, Product newProduct) {

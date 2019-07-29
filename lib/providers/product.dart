@@ -17,6 +17,16 @@ class Product with ChangeNotifier {
     this.isFavorite = false,
   });
 
+  factory Product.fromMap(Map data, String documentID) {
+    return Product(
+        id: documentID,
+        title: data['title'],
+        description: data['description'],
+        price: data['price'],
+        imageUrl: data['imageUrl'],
+        isFavorite: data['isFavorite']);
+  }
+
   void toggleFavoriteStatus() {
     isFavorite = !isFavorite;
     notifyListeners();
