@@ -27,6 +27,11 @@ class Document<T> {
     return ref.setData(Map<String, dynamic>.from(data), merge: true);
   }
 
+  // delete a document
+  Future<void> delete() {
+    return ref.delete();
+  }
+
   // final segments = path.split('/');
   //   if (segments.length % 2 == 0) {
   //     print('segemnts' + segments.toString());
