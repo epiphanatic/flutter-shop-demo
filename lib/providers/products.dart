@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../services/services.dart';
 
 import './product.dart';
 
@@ -67,13 +68,26 @@ class Products with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  void addProduct(Product product) {
+  void addProduct(Product product) async {
+    // add to DB
+    Collection<Product> _doc = Collection<Product>(path: 'products-shop-demo');
+    final res = await _doc.addDoc(
+      ({
+        'title': product.title,
+        'description': product.description,
+        'price': product.price,
+        'imageUrl': product.imageUrl,
+      }),
+    );
+    print(res.documentID);
+
+    // add to local (although this should be removed and stream should be used instead)
     final newProduct = Product(
       title: product.title,
       description: product.description,
       price: product.price,
       imageUrl: product.imageUrl,
-      id: DateTime.now().toString(),
+      id: res.documentID,
     );
     _items.add(newProduct);
     // _items.insert(0, newProduct); // at the start of the list
