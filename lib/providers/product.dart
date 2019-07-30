@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import '../services/services.dart';
 
 class Product with ChangeNotifier {
   final String id;
@@ -27,8 +28,23 @@ class Product with ChangeNotifier {
         isFavorite: data['isFavorite']);
   }
 
-  void toggleFavoriteStatus() {
+  Future<void> toggleFavoriteStatus() async {
+    /// NOTE: again, is kind of thing will never throw an error since setData
+    /// doesn't return anything from firestore
+    bool oldStatus = isFavorite;
     isFavorite = !isFavorite;
     notifyListeners();
+    Document<Product> _docRef =
+        Document<Product>(path: 'products-shop-demo/$id');
+    try {
+      await _docRef.upsert(({'isFavorite': isFavorite}));
+    } catch (error) {
+      isFavorite = oldStatus;
+      notifyListeners();
+      // here is where you would send errors to DB in future.
+      print('error: ' + error.toString());
+      // throwing the error will let calling function know there was one and passses it
+      throw error;
+    }
   }
 }

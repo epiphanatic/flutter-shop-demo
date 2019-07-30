@@ -13,6 +13,14 @@ class CartItem {
     @required this.quantity,
     @required this.price,
   });
+
+  factory CartItem.fromMap(Map data) {
+    return CartItem(
+        id: data['id'],
+        title: data['title'],
+        quantity: data['quantity'],
+        price: data['price']);
+  }
 }
 
 class Cart with ChangeNotifier {
