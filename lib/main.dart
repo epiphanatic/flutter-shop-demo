@@ -54,7 +54,14 @@ class MyApp extends StatelessWidget {
                 },
               ),
             ),
-            home: user != null ? ProductsOverviewScreen() : AuthScreen(),
+
+            /// this only works if not logged in or already logged in, purpose being
+            /// to not flicker by going to one page and then forwarding if already logged
+            /// in. Therefore, if logging in and successful, forward to products overview
+            /// from login page as this for whatever reason doesn't work. I think home only
+            /// renders once, regardless if all this is wrapped in consumer and auth state
+            /// changes.
+            home: user == null ? AuthScreen() : ProductsOverviewScreen(),
             routes: {
               AuthScreen.routeName: (ctx) => AuthScreen(),
               ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
@@ -62,6 +69,8 @@ class MyApp extends StatelessWidget {
               OrdersScreen.routeName: (ctx) => OrdersScreen(),
               UserProductsScreen.routeName: (ctx) => UserProductsScreen(),
               EditProductScreen.routeName: (ctx) => EditProductScreen(),
+              ProductsOverviewScreen.routeName: (ctx) =>
+                  ProductsOverviewScreen()
             }),
       ),
     );

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_shop_demo/screens/products_overview_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../widgets/adaptive_flat_button.dart';
@@ -14,7 +15,10 @@ class AuthScreen extends StatelessWidget {
 
   Future<void> _googleSignin(BuildContext context) async {
     try {
-      await Provider.of<Auth>(context, listen: false).googleSignIn();
+      var user = await Provider.of<Auth>(context, listen: false).googleSignIn();
+      if (user != null)
+        Navigator.of(context)
+            .pushReplacementNamed(ProductsOverviewScreen.routeName);
     } on PlatformException catch (error) {
       // String errorMessage = error.message;
       // _showErrorDialog(errorMessage);
@@ -172,16 +176,23 @@ class _AuthCardState extends State<AuthCard> {
     try {
       if (_authMode == AuthMode.Login) {
         // Log user in
-        await Provider.of<Auth>(context, listen: false).loginEmailPass(
+        var user =
+            await Provider.of<Auth>(context, listen: false).loginEmailPass(
           _authData['email'],
           _authData['password'],
         );
+        if (user != null)
+          Navigator.of(context)
+              .pushReplacementNamed(ProductsOverviewScreen.routeName);
       } else {
         // Sign user up
-        await Provider.of<Auth>(context, listen: false).signUp(
+        var user = await Provider.of<Auth>(context, listen: false).signUp(
           _authData['email'],
           _authData['password'],
         );
+        if (user != null)
+          Navigator.of(context)
+              .pushReplacementNamed(ProductsOverviewScreen.routeName);
       }
     } on PlatformException catch (error) {
       String errorMessage = error.message;

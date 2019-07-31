@@ -70,6 +70,7 @@ class Products with ChangeNotifier {
   // }
 
   Future<void> fetchAndSetProducts(String uid) async {
+    _items = [];
     Collection<Product> _allProducts =
         Collection<Product>(path: 'products-shop-demo');
     Document<UserFavorites> _userFavs =
