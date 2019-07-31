@@ -14,8 +14,11 @@ class Document<T> {
   }
 
   Future<T> getData() {
-    // return ref.get().then((v) => (v.data) as T);
     return ref.get().then((v) => Global.models[T](v.data) as T);
+  }
+
+  Future<T> getDataNoTyping() {
+    return ref.get().then((v) => (v.data) as T);
   }
 
   Stream<T> streamData() {

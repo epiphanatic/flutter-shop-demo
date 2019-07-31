@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/services.dart';
 import './product.dart';
-import '../models/user_favs.dart';
-import 'dart:convert';
 
 class Products with ChangeNotifier {
   List<Product> _items = [
@@ -73,9 +71,9 @@ class Products with ChangeNotifier {
     _items = [];
     Collection<Product> _allProducts =
         Collection<Product>(path: 'products-shop-demo');
-    Document<UserFavorites> _userFavs =
-        Document<UserFavorites>(path: 'userFavorites-shop-demo/$uid');
-    final _resFavs = await _userFavs.getData();
+    Document<Map> _userFavs =
+        Document<Map>(path: 'userFavorites-shop-demo/$uid');
+    final _resFavs = await _userFavs.getDataNoTyping();
 
     /// an cleaner solution here would be to figure out how to model a dynamic
     /// product id or model it differently, but this works for now.
@@ -88,8 +86,7 @@ class Products with ChangeNotifier {
             // there is no entry for user
             _skipFav = true;
           } else {
-            if (_resFavs.favorites == null ||
-                _resFavs.favorites[prod.id] == null) {
+            if (_resFavs[prod.id] == null) {
               // either favorites ! exist or the product doesn't exist in favorites if it does
               _skipFav = true;
             }
@@ -102,7 +99,7 @@ class Products with ChangeNotifier {
               title: prod.title,
               isFavorite: _skipFav == true
                   ? false
-                  : _resFavs.favorites[prod.id]['isFavorite'] ?? false));
+                  : _resFavs[prod.id]['isFavorite'] ?? false));
         }
         notifyListeners();
       }

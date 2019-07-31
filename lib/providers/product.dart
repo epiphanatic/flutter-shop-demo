@@ -39,10 +39,13 @@ class Product with ChangeNotifier {
     Document<Product> _docRef =
         Document<Product>(path: 'userFavorites-shop-demo/$uid');
     try {
+      // await _docRef.upsert(({
+      //   'favorites': {
+      //     '$prodId': {'isFavorite': isFavorite}
+      //   }
+      // }));
       await _docRef.upsert(({
-        'favorites': {
-          '$prodId': {'isFavorite': isFavorite}
-        }
+        '$prodId': {'isFavorite': isFavorite}
       }));
     } catch (error) {
       isFavorite = oldStatus;
