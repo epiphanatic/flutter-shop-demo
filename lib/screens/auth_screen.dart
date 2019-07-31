@@ -115,12 +115,6 @@ class AuthScreen extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      // handler: () async {
-                      //   var user = await auth.googleSignIn();
-                      //   if (user != null) {
-                      //     Navigator.pushReplacementNamed(context, '/profile');
-                      //   }
-                      // },
                     ),
                   )
                 ],
