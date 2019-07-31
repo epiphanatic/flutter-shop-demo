@@ -48,75 +48,68 @@ class AuthScreen extends StatelessWidget {
               ),
             ),
           ),
-          SingleChildScrollView(
-            child: Container(
-              height: deviceSize.height,
-              width: deviceSize.width,
+          Container(
+            height: deviceSize.height,
+            width: deviceSize.width,
+            child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Flexible(
-                    child: Container(
-                      margin: EdgeInsets.only(bottom: 20.0),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 94.0),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 20.0, top: 94.0),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 94.0),
 
-                      /// the .. operator (cascade) calls translate on that object,
-                      /// but then does not return what translate returns (void) but
-                      /// returns what the previous state returns. It basically saves you
-                      /// from having another variable and extra lines of code.
-                      transform: Matrix4.rotationZ(-8 * pi / 180)
-                        ..translate(-10.0),
-                      // ..translate(-10.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.deepOrange.shade900,
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 8,
-                            color: Colors.black26,
-                            offset: Offset(0, 2),
-                          )
-                        ],
-                      ),
-                      child: Text(
-                        'MyShop',
-                        style: TextStyle(
-                          color: Theme.of(context).accentTextTheme.title.color,
-                          fontSize: 50,
-                          fontFamily: 'Anton',
-                          fontWeight: FontWeight.normal,
-                        ),
+                    /// the .. operator (cascade) calls translate on that object,
+                    /// but then does not return what translate returns (void) but
+                    /// returns what the previous state returns. It basically saves you
+                    /// from having another variable and extra lines of code.
+                    transform: Matrix4.rotationZ(-8 * pi / 180)
+                      ..translate(-10.0),
+                    // ..translate(-10.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.deepOrange.shade900,
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 8,
+                          color: Colors.black26,
+                          offset: Offset(0, 2),
+                        )
+                      ],
+                    ),
+                    child: Text(
+                      'MyShop',
+                      style: TextStyle(
+                        color: Theme.of(context).accentTextTheme.title.color,
+                        fontSize: 50,
+                        fontFamily: 'Anton',
+                        fontWeight: FontWeight.normal,
                       ),
                     ),
                   ),
-                  Flexible(
-                    flex: deviceSize.width > 600 ? 2 : 1,
-                    child: AuthCard(),
-                  ),
+                  // ),
+                  AuthCard(),
                   SizedBox(
                     height: 20.0,
                   ),
-                  Flexible(
-                    flex: deviceSize.width > 600 ? 2 : 1,
-                    child: AdaptiveFlatButton(
-                      text: 'LOGIN WITH GOOGLE',
-                      width: deviceSize.width * 0.75,
-                      icon: FontAwesomeIcons.google,
-                      buttonPadding: EdgeInsets.all(20),
-                      // buttonColor: Colors.black45,
-                      buttonColor: Theme.of(context).primaryColor,
-                      iconColor: Colors.white,
-                      textColor: Colors.white,
-                      handler: () {
-                        _googleSignin(context);
-                      },
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
+                  AdaptiveFlatButton(
+                    text: 'LOGIN WITH GOOGLE',
+                    width: deviceSize.width * 0.75,
+                    icon: FontAwesomeIcons.google,
+                    buttonPadding: EdgeInsets.all(20),
+                    // buttonColor: Colors.black45,
+                    buttonColor: Theme.of(context).primaryColor,
+                    iconColor: Colors.white,
+                    textColor: Colors.white,
+                    handler: () {
+                      _googleSignin(context);
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
