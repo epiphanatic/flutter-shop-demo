@@ -15,6 +15,9 @@ class Auth with ChangeNotifier {
         email: email, password: password);
     FirebaseUser user = authResult.user;
     assert(user != null);
+    assert(await user.getIdToken() != null);
+    final FirebaseUser currentUser = await getUser;
+    assert(user.uid == currentUser.uid);
     print('user registered: $user');
     updateUserData(user);
     return user;
@@ -25,6 +28,9 @@ class Auth with ChangeNotifier {
         email: email, password: password);
     FirebaseUser user = authResult.user;
     assert(user != null);
+    assert(await user.getIdToken() != null);
+    final FirebaseUser currentUser = await getUser;
+    assert(user.uid == currentUser.uid);
     print('user signed in via email: $user');
     return user;
   }

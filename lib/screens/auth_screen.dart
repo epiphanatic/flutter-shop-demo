@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_shop_demo/screens/products_overview_screen.dart';
@@ -15,7 +16,7 @@ class AuthScreen extends StatelessWidget {
 
   Future<void> _googleSignin(BuildContext context) async {
     try {
-      var user = await Provider.of<Auth>(context, listen: false).googleSignIn();
+      FirebaseUser user = await Provider.of<Auth>(context).googleSignIn();
       if (user != null)
         Navigator.of(context)
             .pushReplacementNamed(ProductsOverviewScreen.routeName);
@@ -176,8 +177,7 @@ class _AuthCardState extends State<AuthCard> {
     try {
       if (_authMode == AuthMode.Login) {
         // Log user in
-        var user =
-            await Provider.of<Auth>(context, listen: false).loginEmailPass(
+        FirebaseUser user = await Provider.of<Auth>(context).loginEmailPass(
           _authData['email'],
           _authData['password'],
         );
@@ -186,7 +186,7 @@ class _AuthCardState extends State<AuthCard> {
               .pushReplacementNamed(ProductsOverviewScreen.routeName);
       } else {
         // Sign user up
-        var user = await Provider.of<Auth>(context, listen: false).signUp(
+        FirebaseUser user = await Provider.of<Auth>(context).signUp(
           _authData['email'],
           _authData['password'],
         );
