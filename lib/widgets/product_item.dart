@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +15,8 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseUser _user = Provider.of<FirebaseUser>(context);
+
     /// product looks for nearest <Product> which is currently provided in Grid
     final product = Provider.of<Product>(context, listen: false);
     final cart = Provider.of<Cart>(context, listen: false);
@@ -42,7 +45,8 @@ class ProductItem extends StatelessWidget {
               ),
               color: Theme.of(context).accentColor,
               onPressed: () {
-                product.toggleFavoriteStatus();
+                product.toggleFavoriteStatus(
+                    uid: _user.uid, prodId: product.id);
               },
             ),
           ),

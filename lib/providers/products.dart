@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../services/services.dart';
-
 import './product.dart';
+import '../models/user_favs.dart';
+import 'dart:convert';
 
 class Products with ChangeNotifier {
   List<Product> _items = [
@@ -68,16 +69,40 @@ class Products with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  Future<void> fetchAndSetProducts() async {
-    Collection<Product> _colRef =
+  Future<void> fetchAndSetProducts(String uid) async {
+    Collection<Product> _allProducts =
         Collection<Product>(path: 'products-shop-demo');
+    Document<UserFavorites> _userFavs =
+        Document<UserFavorites>(path: 'userFavorites-shop-demo/$uid');
+    final _resFavs = await _userFavs.getData();
+
+    /// an cleaner solution here would be to figure out how to model a dynamic
+    /// product id or model it differently, but this works for now.
     try {
-      final res = await _colRef.getData();
+      final res = await _allProducts.getData();
       if (res.length != 0) {
-        _items = res;
-        // for (Product prod in res) {
-        //   _items.add(prod);
-        // }
+        for (Product prod in res) {
+          bool _skipFav = false;
+          if (_resFavs == null) {
+            // there is no entry for user
+            _skipFav = true;
+          } else {
+            if (_resFavs.favorites == null ||
+                _resFavs.favorites[prod.id] == null) {
+              // either favorites ! exist or the product doesn't exist in favorites if it does
+              _skipFav = true;
+            }
+          }
+          _items.add(Product(
+              id: prod.id,
+              description: prod.description,
+              imageUrl: prod.imageUrl,
+              price: prod.price,
+              title: prod.title,
+              isFavorite: _skipFav == true
+                  ? false
+                  : _resFavs.favorites[prod.id]['isFavorite'] ?? false));
+        }
         notifyListeners();
       }
     } catch (error) {
@@ -99,11 +124,9 @@ class Products with ChangeNotifier {
           'description': product.description,
           'price': product.price,
           'imageUrl': product.imageUrl,
-          'isFavorite': product.isFavorite
         }),
       );
 
-      // add to local (although this should be removed and stream should be used instead)
       final newProduct = Product(
         title: product.title,
         description: product.description,
@@ -132,7 +155,6 @@ class Products with ChangeNotifier {
           'description': newProduct.description,
           'price': newProduct.price,
           'imageUrl': newProduct.imageUrl,
-          'isFavorite': newProduct.isFavorite
         }),
       );
       final prodIndex = _items.indexWhere((prod) => prod.id == id);

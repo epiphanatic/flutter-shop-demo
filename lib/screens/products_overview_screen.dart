@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +30,8 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
     // get products
     // BUT...this won't work in init state if not using listen: false bc
     // don't have context yet.
+    // ...that is unless you use listen: false after context, then you can.
+    // or use the future delay approach (illustrated in another file)
     // Provider.of<Products>(context).fetchAndSetProducts();
     super.initState();
   }
@@ -39,7 +42,8 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
       setState(() {
         _isLoading = true;
       });
-      Provider.of<Products>(context).fetchAndSetProducts().then((_) {
+      FirebaseUser _user = Provider.of<FirebaseUser>(context, listen: false);
+      Provider.of<Products>(context).fetchAndSetProducts(_user.uid).then((_) {
         setState(() {
           _isLoading = false;
         });

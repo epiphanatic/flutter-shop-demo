@@ -1,6 +1,7 @@
 import '../providers/product.dart';
 import '../providers/orders.dart';
 import '../providers/cart.dart';
+import '../models/user_favs.dart';
 
 class Global {
   // App Data
@@ -10,6 +11,7 @@ class Global {
   static final Map models = {
     Product: (data, documentID) => Product.fromMap(data, documentID),
     OrderItem: (data, documentID) => OrderItem.fromMap(data, documentID),
-    CartItem: (data) => CartItem.fromMap(data)
+    CartItem: (data) => CartItem.fromMap(data),
+    UserFavorites: (data) => UserFavorites.fromMap(data)
   };
 }

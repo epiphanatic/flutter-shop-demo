@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
 import '../services/services.dart';
 
 class Product with ChangeNotifier {
@@ -28,16 +30,20 @@ class Product with ChangeNotifier {
         isFavorite: data['isFavorite']);
   }
 
-  Future<void> toggleFavoriteStatus() async {
+  Future<void> toggleFavoriteStatus({String uid, String prodId}) async {
     /// NOTE: again, is kind of thing will never throw an error since setData
     /// doesn't return anything from firestore
     bool oldStatus = isFavorite;
     isFavorite = !isFavorite;
     notifyListeners();
     Document<Product> _docRef =
-        Document<Product>(path: 'products-shop-demo/$id');
+        Document<Product>(path: 'userFavorites-shop-demo/$uid');
     try {
-      await _docRef.upsert(({'isFavorite': isFavorite}));
+      await _docRef.upsert(({
+        'favorites': {
+          '$prodId': {'isFavorite': isFavorite}
+        }
+      }));
     } catch (error) {
       isFavorite = oldStatus;
       notifyListeners();

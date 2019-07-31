@@ -15,11 +15,11 @@ class Document<T> {
 
   Future<T> getData() {
     // return ref.get().then((v) => (v.data) as T);
-    // return ref.get().then((v) => Global.models[T](v.data) as T);
+    return ref.get().then((v) => Global.models[T](v.data) as T);
   }
 
   Stream<T> streamData() {
-    // return ref.snapshots().map((v) => Global.models[T](v.data) as T);
+    return ref.snapshots().map((v) => Global.models[T](v.data) as T);
   }
 
   // set document in collection or merge with existing if exists
