@@ -38,9 +38,9 @@ class Orders with ChangeNotifier {
 
   final uuid = new Uuid();
 
-  Future fetchAndSetOrders() async {
-    Collection<OrderItem> _colRef =
-        Collection<OrderItem>(path: 'orders-shop-demo');
+  Future fetchAndSetOrders(String uid) async {
+    CollectionUserOrders<OrderItem> _colRef =
+        CollectionUserOrders<OrderItem>(path: 'orders-shop-demo', uid: uid);
     try {
       final res = await _colRef.getData();
       if (res.length != 0) {
@@ -60,7 +60,7 @@ class Orders with ChangeNotifier {
     }
   }
 
-  Future<void> addOrder(List<CartItem> cartProducts, double total) async {
+  Future<void> addOrder(List<CartItem> cartProducts, double total, uid) async {
     // add to DB
     Collection<Product> _colRef = Collection<Product>(path: 'orders-shop-demo');
     final Timestamp dateTime = Timestamp.now();
@@ -77,6 +77,7 @@ class Orders with ChangeNotifier {
                     'price': cp.price
                   })
               .toList(),
+          'uid': uid
         }),
       );
 

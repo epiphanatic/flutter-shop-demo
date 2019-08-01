@@ -42,6 +42,10 @@ class Document<T> {
 /// be confined to a single where clause.
 /// There may be a way to dynamically add where clauses but I can't figure it
 /// out right now and need to move on.
+///
+/// **** however, note that you could at least abstract something like
+/// one query is equal to and pass in target and condition. That would work
+/// so for future reference do that to save some code.
 class Collection<T> {
   final Firestore _db = Firestore.instance;
   final String path;
@@ -85,6 +89,28 @@ class CollectionUserProducts<T> {
   Future<List<T>> getData() async {
     QuerySnapshot snapshot =
         await ref.where('creatorUid', isEqualTo: uid).getDocuments();
+    return snapshot.documents
+        .map((doc) => Global.models[T](doc.data, doc.documentID) as T)
+        .toList();
+  }
+}
+
+class CollectionUserOrders<T> {
+  final Firestore _db = Firestore.instance;
+  final String path;
+  final String uid;
+
+  CollectionReference ref;
+
+  CollectionUserOrders({this.path, this.uid}) {
+    ref = _db.collection(path);
+  }
+
+  Future<List<T>> getData() async {
+    QuerySnapshot snapshot = await ref
+        .where('uid', isEqualTo: uid)
+        .orderBy('dateTime', descending: true)
+        .getDocuments();
     return snapshot.documents
         .map((doc) => Global.models[T](doc.data, doc.documentID) as T)
         .toList();

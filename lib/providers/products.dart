@@ -71,6 +71,7 @@ class Products with ChangeNotifier {
     // if filterByUser was passed in and is true, then you are getting only
     // their products, ie you are on the manage products page
     _items = [];
+    print('fetch and set products called');
     print('filter by user: ' + filterByUser.toString());
     var _products;
     // Collection<Product> _products =
@@ -133,15 +134,17 @@ class Products with ChangeNotifier {
           'creatorEmail': email
         }),
       );
-
-      final newProduct = Product(
-        title: product.title,
-        description: product.description,
-        price: product.price,
-        imageUrl: product.imageUrl,
-        id: res.documentID,
-      );
-      _items.add(newProduct);
+      // not using anymore since products are re-fetched after adding.
+      // *** however, note there is a 'bug' that while in the edit product screen
+      //   every time a text field is changed fetch and set products is being called...
+      // final newProduct = Product(
+      //   title: product.title,
+      //   description: product.description,
+      //   price: product.price,
+      //   imageUrl: product.imageUrl,
+      //   id: res.documentID,
+      // );
+      // _items.add(newProduct);
       // _items.insert(0, newProduct); // at the start of the list
       notifyListeners();
     } catch (error) {

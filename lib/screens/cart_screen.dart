@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // don't import CartItem from cart.dart, but cart_item
@@ -95,10 +96,12 @@ class _OrderButtonState extends State<OrderButton> {
               setState(() {
                 _isLoading = true;
               });
+              FirebaseUser _user =
+                  Provider.of<FirebaseUser>(context, listen: false);
               await Provider.of<Orders>(context, listen: false).addOrder(
-                widget.cart.items.values.toList(),
-                widget.cart.totalAmount,
-              );
+                  widget.cart.items.values.toList(),
+                  widget.cart.totalAmount,
+                  _user.uid);
               setState(() {
                 _isLoading = false;
               });

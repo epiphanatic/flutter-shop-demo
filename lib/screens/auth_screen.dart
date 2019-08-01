@@ -36,91 +36,96 @@ class AuthScreen extends StatelessWidget {
     final deviceSize = MediaQuery.of(context).size;
     // final transformConfig = Matrix4.rotationZ(-8 * pi / 180);
     // transformConfig.translate(-10.0);
-    return Scaffold(
-      // resizeToAvoidBottomInset: false,
-      body: Stack(
-        children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color.fromRGBO(215, 117, 255, 1).withOpacity(0.5),
-                  Color.fromRGBO(255, 188, 117, 1).withOpacity(0.9),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                stops: [0, 1],
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(FocusNode());
+      },
+      child: Scaffold(
+        // resizeToAvoidBottomInset: false,
+        body: Stack(
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromRGBO(215, 117, 255, 1).withOpacity(0.5),
+                    Color.fromRGBO(255, 188, 117, 1).withOpacity(0.9),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  stops: [0, 1],
+                ),
               ),
             ),
-          ),
-          Container(
-            height: deviceSize.height,
-            width: deviceSize.width,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    margin:
-                        EdgeInsets.only(bottom: 20.0, top: 94.0, right: 20.0),
-                    padding:
-                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 94.0),
+            Container(
+              height: deviceSize.height,
+              width: deviceSize.width,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      margin:
+                          EdgeInsets.only(bottom: 20.0, top: 94.0, right: 20.0),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 94.0),
 
-                    /// the .. operator (cascade) calls translate on that object,
-                    /// but then does not return what translate returns (void) but
-                    /// returns what the previous state returns. It basically saves you
-                    /// from having another variable and extra lines of code.
-                    transform: Matrix4.rotationZ(-8 * pi / 180)
-                      ..translate(-10.0),
-                    // ..translate(-10.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.deepOrange.shade900,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 8,
-                          color: Colors.black26,
-                          offset: Offset(0, 2),
-                        )
-                      ],
-                    ),
-                    child: Text(
-                      'MyShop',
-                      style: TextStyle(
-                        color: Theme.of(context).accentTextTheme.title.color,
-                        fontSize: 50,
-                        fontFamily: 'Anton',
-                        fontWeight: FontWeight.normal,
+                      /// the .. operator (cascade) calls translate on that object,
+                      /// but then does not return what translate returns (void) but
+                      /// returns what the previous state returns. It basically saves you
+                      /// from having another variable and extra lines of code.
+                      transform: Matrix4.rotationZ(-8 * pi / 180)
+                        ..translate(-10.0),
+                      // ..translate(-10.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.deepOrange.shade900,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 8,
+                            color: Colors.black26,
+                            offset: Offset(0, 2),
+                          )
+                        ],
+                      ),
+                      child: Text(
+                        'MyShop',
+                        style: TextStyle(
+                          color: Theme.of(context).accentTextTheme.title.color,
+                          fontSize: 50,
+                          fontFamily: 'Anton',
+                          fontWeight: FontWeight.normal,
+                        ),
                       ),
                     ),
-                  ),
-                  // ),
-                  AuthCard(),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  AdaptiveFlatButton(
-                    text: 'LOGIN WITH GOOGLE',
-                    width: deviceSize.width * 0.75,
-                    icon: FontAwesomeIcons.google,
-                    buttonPadding: EdgeInsets.all(20),
-                    // buttonColor: Colors.black45,
-                    buttonColor: Theme.of(context).primaryColor,
-                    iconColor: Colors.white,
-                    textColor: Colors.white,
-                    handler: () {
-                      _googleSignin(context);
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                    // ),
+                    AuthCard(),
+                    SizedBox(
+                      height: 20.0,
                     ),
-                  ),
-                ],
+                    AdaptiveFlatButton(
+                      text: 'LOGIN WITH GOOGLE',
+                      width: deviceSize.width * 0.75,
+                      icon: FontAwesomeIcons.google,
+                      buttonPadding: EdgeInsets.all(20),
+                      // buttonColor: Colors.black45,
+                      buttonColor: Theme.of(context).primaryColor,
+                      iconColor: Colors.white,
+                      textColor: Colors.white,
+                      handler: () {
+                        _googleSignin(context);
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

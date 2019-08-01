@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -52,13 +53,15 @@ class OrdersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final orderData = Provider.of<Orders>(context);
+    FirebaseUser _user = Provider.of<FirebaseUser>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Orders'),
       ),
       drawer: AppDrawer(),
       body: FutureBuilder(
-        future: Provider.of<Orders>(context, listen: false).fetchAndSetOrders(),
+        future: Provider.of<Orders>(context, listen: false)
+            .fetchAndSetOrders(_user.uid),
         builder: (BuildContext ctx, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
