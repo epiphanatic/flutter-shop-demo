@@ -30,10 +30,13 @@ class ProductItem extends StatelessWidget {
               arguments: product.id,
             );
           },
-          child: FadeInImage(
-            image: NetworkImage(product.imageUrl),
-            fit: BoxFit.cover,
-            placeholder: AssetImage('assets/images/shop.png'),
+          child: Hero(
+            tag: product.id,
+            child: FadeInImage(
+              image: NetworkImage(product.imageUrl),
+              fit: BoxFit.cover,
+              placeholder: AssetImage('assets/images/shop.png'),
+            ),
           ),
         ),
         footer: GridTileBar(
