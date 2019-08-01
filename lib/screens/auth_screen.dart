@@ -151,32 +151,14 @@ class _AuthCardState extends State<AuthCard>
   var _isLoading = false;
   final _passwordController = TextEditingController();
 
-  AnimationController _controller;
-  Animation<Offset> _slideAnimation;
-
   @override
   void initState() {
-    _controller = AnimationController(
-      vsync: this,
-      duration: Duration(
-        milliseconds: 300,
-      ),
-    );
-    _slideAnimation = Tween<Offset>(
-      begin: Offset(0, -1.5),
-      end: Offset.zero,
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.fastOutSlowIn,
-      ),
-    );
     super.initState();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    // _controller.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -309,8 +291,6 @@ class _AuthCardState extends State<AuthCard>
                   ),
                   duration: Duration(milliseconds: 300),
                   curve: Curves.easeIn,
-                  // cant get fade to work in conjunction with slide atm,
-                  // so not fading in textform
                   child: TextFormField(
                     enabled: _authMode == AuthMode.Signup,
                     decoration: InputDecoration(labelText: 'Confirm Password'),
