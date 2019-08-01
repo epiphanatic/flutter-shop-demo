@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -85,6 +86,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   Future<void> _saveForm() async {
+    FirebaseUser _user = Provider.of<FirebaseUser>(context);
     final isValid = _form.currentState.validate();
     if (!isValid) {
       return;
@@ -98,8 +100,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
           .updateProduct(_editedProduct.id, _editedProduct);
     } else {
       try {
-        await Provider.of<Products>(context, listen: false)
-            .addProduct(_editedProduct);
+        await Provider.of<Products>(context, listen: false).addProduct(
+            product: _editedProduct, uid: _user.uid, email: _user.email);
       } catch (error) {
         await showDialog(
           context: context,

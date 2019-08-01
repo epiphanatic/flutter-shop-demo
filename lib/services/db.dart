@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import './globals.dart';
 import 'dart:async';
 import 'package:rxdart/rxdart.dart';
@@ -34,41 +33,30 @@ class Document<T> {
   Future<void> delete() {
     return ref.delete();
   }
-
-  // final segments = path.split('/');
-  //   if (segments.length % 2 == 0) {
-  //     print('segemnts' + segments.toString());
-  //     print('custom key: ' + segments[segments.length - 1]);
-  //     // has custom key passed in - last element in segments
-  //     return ref
-  //         .document(segments[segments.length - 1])
-  //         .setData(Map<String, dynamic>.from(data));
-  //   } else {
-  //     print('auto adding');
-  //     // use uato add
-
-  //   }
 }
 
+/// Will not handle queries - for now anything with query or multiple queries
+/// has to have it's own class. It's possible to pass in a specific number of
+/// queries, ie one or more, but i can't abstract to an unkown number of queries
+/// which makes putting that in the base class pointless since you'd always
+/// be confined to a single where clause.
+/// There may be a way to dynamically add where clauses but I can't figure it
+/// out right now and need to move on.
 class Collection<T> {
   final Firestore _db = Firestore.instance;
   final String path;
-  final String query; // this isn't implemented yet.
 
   CollectionReference ref;
 
-  Collection({this.path, this.query}) {
+  Collection({this.path}) {
     ref = _db.collection(path);
   }
 
   Future<List<T>> getData() async {
-    var snapshots = await ref.getDocuments();
-    return snapshots.documents
+    QuerySnapshot snapshot = await ref.getDocuments();
+    return snapshot.documents
         .map((doc) => Global.models[T](doc.data, doc.documentID) as T)
         .toList();
-    // return snapshots.documents
-    // .map((doc) => Global.models[T](doc.data, doc.documentID) as T)
-    // .toList();
   }
 
   Stream<List<T>> streamData() {
@@ -80,5 +68,25 @@ class Collection<T> {
   /// https://stackoverflow.com/questions/55328838/flutter-firestore-add-new-document-with-custom-id
   Future<DocumentReference> addDoc(Map data) {
     return ref.add(Map<String, dynamic>.from(data));
+  }
+}
+
+class CollectionUserProducts<T> {
+  final Firestore _db = Firestore.instance;
+  final String path;
+  final String uid;
+
+  CollectionReference ref;
+
+  CollectionUserProducts({this.path, this.uid}) {
+    ref = _db.collection(path);
+  }
+
+  Future<List<T>> getData() async {
+    QuerySnapshot snapshot =
+        await ref.where('creatorUid', isEqualTo: uid).getDocuments();
+    return snapshot.documents
+        .map((doc) => Global.models[T](doc.data, doc.documentID) as T)
+        .toList();
   }
 }

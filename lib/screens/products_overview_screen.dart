@@ -44,7 +44,9 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
         _isLoading = true;
       });
       FirebaseUser _user = Provider.of<FirebaseUser>(context, listen: false);
-      Provider.of<Products>(context).fetchAndSetProducts(_user.uid).then((_) {
+      Provider.of<Products>(context, listen: false)
+          .fetchAndSetProducts(uid: _user.uid)
+          .then((_) {
         setState(() {
           _isLoading = false;
         });

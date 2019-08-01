@@ -67,10 +67,17 @@ class Products with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  Future<void> fetchAndSetProducts(String uid) async {
+  Future<void> fetchAndSetProducts({String uid, bool filterByUser}) async {
+    // if filterByUser was passed in and is true, then you are getting only
+    // their products, ie you are on the manage products page
     _items = [];
-    Collection<Product> _allProducts =
-        Collection<Product>(path: 'products-shop-demo');
+    print('filter by user: ' + filterByUser.toString());
+    var _products;
+    // Collection<Product> _products =
+    //     Collection<Product>(path: 'products-shop-demo');
+    _products = (filterByUser == true)
+        ? CollectionUserProducts<Product>(path: 'products-shop-demo', uid: uid)
+        : Collection<Product>(path: 'products-shop-demo');
     Document<Map> _userFavs =
         Document<Map>(path: 'userFavorites-shop-demo/$uid');
     final _resFavs = await _userFavs.getDataNoTyping();
@@ -78,7 +85,7 @@ class Products with ChangeNotifier {
     /// an cleaner solution here would be to figure out how to model a dynamic
     /// product id or model it differently, but this works for now.
     try {
-      final res = await _allProducts.getData();
+      final res = await _products.getData();
       if (res.length != 0) {
         for (Product prod in res) {
           bool _skipFav = false;
@@ -111,7 +118,7 @@ class Products with ChangeNotifier {
     }
   }
 
-  Future<void> addProduct(Product product) async {
+  Future<void> addProduct({Product product, String uid, String email}) async {
     // add to DB
     Collection<Product> _colRef =
         Collection<Product>(path: 'products-shop-demo');
@@ -122,6 +129,8 @@ class Products with ChangeNotifier {
           'description': product.description,
           'price': product.price,
           'imageUrl': product.imageUrl,
+          'creatorUid': uid,
+          'creatorEmail': email
         }),
       );
 

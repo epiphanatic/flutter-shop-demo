@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
           value: Auth().user,
         ),
         ChangeNotifierProvider.value(
+          // set products to empty every time there is a change / load page
           value: Products(),
         ),
         ChangeNotifierProvider.value(
